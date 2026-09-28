@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="SevaDesk">
+  <rect width="32" height="32" rx="8" fill="#0e6b5b" />
+  <path d="M9 10.5h14M9 16h8.5M9 21.5h5" stroke="#f4f2ec" stroke-width="2.4" stroke-linecap="round" />
+  <path d="m18.5 20 2.6 2.6 4.6-5.2" fill="none" stroke="#8fe0cb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
