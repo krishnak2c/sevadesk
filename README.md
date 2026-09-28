@@ -41,6 +41,27 @@ Demo accounts (created by the seed):
 | Owner | `owner@demo.com` | `Staff@123` |
 | Staff | `staff@demo.com` | `Staff@123` |
 
+## Deploy
+
+The API and frontend are hosted separately: the backend as a Render web service (MongoDB on Atlas), the frontend as a static build.
+
+**1. MongoDB Atlas (once, ~5 min)**
+- Create a free **M0** cluster (any region).
+- Database Access → add a user; Network Access → allow `0.0.0.0/0`.
+- Get the connection string, replace `<db_password>`, and append the database name: `...mongodb.net/sevadesk?retryWrites=true&w=majority`.
+
+**2. API on Render (one-click)**
+- Push this repo to GitHub, then Render dashboard → **New → Blueprint** → paste the repo URL. `render.yaml` creates the `sevadesk-api` service.
+- At creation it prompts for `MONGODB_URI` (from step 1), `JWT_SECRET` (`openssl rand -hex 32`), and `ALLOWED_ORIGINS`. Leave `ALLOWED_ORIGINS` empty for now; it's set once the frontend URL exists.
+- `NODE_ENV=production` fails fast if `JWT_SECRET` is missing or under 32 characters, and refuses to seed unless `ALLOW_PROD_SEED=true` is set explicitly.
+
+**3. Frontend on Vercel**
+- `npm run build` with `VITE_API_URL=https://<your-api>.onrender.com` baked in (see `frontend/README.md`), then deploy the `dist/` output.
+
+**4. Wire together**
+- Back on Render, set `ALLOWED_ORIGINS` to the deployed frontend origin (e.g. `https://sevadesk.vercel.app`) and save — the service redeploys.
+- Seed the production database once: `MONGODB_URI=... ALLOW_PROD_SEED=true npm run seed` from `backend/`, then never again. The seed only creates the two demo users and 20 sample requests; it is idempotent and refuses to run in production without the flag.
+
 ## What it demos
 
 - **Authn + Authz** — JWT in an httpOnly cookie, owner/staff RBAC enforced server-side (field edits and deletes are owner-only).

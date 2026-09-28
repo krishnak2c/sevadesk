@@ -1,0 +1,37 @@
+# Render Blueprint — one-click API deployment.
+#
+#   Dashboard → New → Blueprint → paste https://github.com/krishnak2c/sevadesk
+#
+# The three `sync: false` variables are prompted at deploy time:
+#   MONGODB_URI       connection string from MongoDB Atlas (see README → Deploy)
+#   JWT_SECRET        run: openssl rand -hex 32
+#   ALLOWED_ORIGINS   the frontend's origin, e.g. https://sevadesk.vercel.app
+#                     (set after the frontend is deployed, then Save to redeploy)
+version: "1"
+
+services:
+  - type: web
+    name: sevadesk-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    repo: https://github.com/krishnak2c/sevadesk
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: ALLOW_PROD_SEED
+        value: "false"
