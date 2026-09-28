@@ -1,0 +1,23 @@
+/* List placeholders — same rhythm as the real table so the page does not jump. */
+.skeleton-list {
+  display: grid;
+  gap: 10px;
+}
+
+.skeleton-list__row {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.6fr 1fr;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+/* Detail placeholders — stacked blocks sized like the real panels. */
+.skeleton-detail {
+  display: grid;
+  gap: 1rem;
+  max-width: 900px;
+}

@@ -1,0 +1,11 @@
+/* Compact variant for the legend and dense rows; md is the default size. */
+.status-pill--sm {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.72rem;
+  gap: 0.3rem;
+}
+
+.status-pill--sm svg {
+  width: 12px;
+  height: 12px;
+}

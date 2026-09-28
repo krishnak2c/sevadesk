@@ -1,0 +1,364 @@
+/* App shell: fixed dark sidebar, top bar, scrolling content column. */
+
+.shell {
+  display: grid;
+  grid-template-columns: 244px 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ------------------------------------------------------------- sidebar -- */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100vh;
+  height: 100dvh;
+  padding: 1.35rem 1rem 1rem;
+  background: linear-gradient(178deg, var(--sidebar) 0%, #0e1a18 100%);
+  color: var(--sidebar-text);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 11px;
+  background: linear-gradient(150deg, var(--teal) 0%, var(--teal-deep) 100%);
+  color: #eafff9;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 8px 18px -10px rgba(14, 107, 91, 0.9);
+}
+
+.brand__text {
+  display: grid;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: #f3faf7;
+  letter-spacing: -0.01em;
+}
+
+.brand__clinic {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: #7e948d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__heading {
+  padding: 0 0.7rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6d857e;
+}
+
+.sidebar__list {
+  list-style: none;
+  display: grid;
+  gap: 0.3rem;
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  color: var(--sidebar-text);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.16s var(--ease), color 0.16s var(--ease),
+    border-color 0.16s var(--ease);
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #eaf5f1;
+}
+
+.nav-link.is-active {
+  background: rgba(143, 224, 203, 0.12);
+  border-color: rgba(143, 224, 203, 0.28);
+  color: #b9f0e2;
+}
+
+.nav-link--primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+  box-shadow: 0 8px 20px -14px rgba(14, 107, 91, 1);
+}
+
+.nav-link--primary:hover {
+  background: var(--teal-deep);
+  border-color: var(--teal-deep);
+  color: #fff;
+}
+
+.nav-link--primary.is-active {
+  background: var(--teal-deep);
+  border-color: rgba(143, 224, 203, 0.4);
+  color: #fff;
+}
+
+.sidebar__footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Health indicator lives on the dark rail — inverse colours here. */
+.health {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--sidebar-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.health:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #eaf5f1;
+}
+
+.health__dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.07);
+}
+
+.health__dot--ok {
+  background: #52d6ac;
+}
+
+.health__dot--degraded {
+  background: #e8b04b;
+}
+
+.health__dot--offline {
+  background: #e07a5f;
+}
+
+.health__dot--checking {
+  background: #8ea39d;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* --------------------------------------------------------------- topbar -- */
+
+.shell__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem clamp(1rem, 3vw, 2rem);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar__title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.topbar__menu {
+  display: none;
+  padding: 0.45rem;
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-left: auto;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.6rem 0.3rem 0.3rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-chip__avatar {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--teal-tint);
+  color: var(--teal-deep);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.user-chip__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.user-chip__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
+}
+
+.topbar__logout-label {
+  font-size: 0.875rem;
+}
+
+/* ------------------------------------------------------------- content -- */
+
+.shell__content {
+  flex: 1;
+  padding: clamp(1.1rem, 3vw, 2rem);
+  min-width: 0;
+}
+
+.shell__scrim {
+  display: none;
+}
+
+/* --------------------------------------------------------- responsive -- */
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(78vw, 300px);
+    transform: translateX(-102%);
+    transition: transform 0.28s var(--ease);
+    box-shadow: 30px 0 60px -30px rgba(0, 0, 0, 0.6);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .shell__scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    border: 0;
+    padding: 0;
+    background: rgba(10, 18, 16, 0.5);
+    backdrop-filter: blur(2px);
+    cursor: pointer;
+    animation: fade 0.2s var(--ease) both;
+  }
+
+  .topbar__menu {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .health {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar__title {
+    display: none;
+  }
+
+  .topbar__logout-label {
+    display: none;
+  }
+
+  .topbar__logout {
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  /*
+   * No hard `ch` cap here: a fixed width made the chip report
+   * scrollWidth > clientWidth and clip the name mid-word. Wrapping keeps
+   * the full name visible and the chip inside the top bar.
+   */
+  .user-chip__name {
+    max-width: 100%;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .user-chip__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+}

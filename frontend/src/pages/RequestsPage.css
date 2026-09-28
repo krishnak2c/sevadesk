@@ -1,0 +1,350 @@
+/* Filter bar: one row on desktop, wrapping to single column on phones. */
+.filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.7fr) repeat(3, minmax(140px, 1fr)) auto;
+  gap: 0.75rem;
+  align-items: end;
+  padding: 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.filters__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filters__search-icon {
+  position: absolute;
+  left: 0.75rem;
+  display: flex;
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+.filters__input {
+  width: 100%;
+  padding: 0.62rem 2.3rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+.filters__input::placeholder {
+  color: #9aa5a0;
+}
+
+.filters__input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-ring, rgba(14, 107, 91, 0.16));
+}
+
+.filters__clear {
+  position: absolute;
+  right: 0.45rem;
+  display: flex;
+  padding: 0.3rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.filters__clear:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.filters__control {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.filters__control label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.filters__reset {
+  white-space: nowrap;
+}
+
+/*
+ * Mobile disclosure. The toggle is hidden on desktop, and the panel is
+ * `display: contents` there, so the selects remain direct grid items and the
+ * desktop filter row is pixel-identical to before this control existed.
+ */
+.filters__toggle {
+  display: none;
+}
+
+.filters__panel {
+  display: contents;
+}
+
+/* Colour-blind safe legend: pills always carry the status word. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  font-size: 0.82rem;
+  color: var(--ink-3);
+}
+
+.legend__label {
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.legend__pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.legend__hint {
+  color: var(--ink-3);
+}
+
+/* Data table — reflows into stacked cards below 760px. */
+.req-table-wrap {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.req-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+}
+
+.req-table thead th {
+  padding: 0.8rem 1.1rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.req-table tbody td {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+.req-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.req-table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.req-table__link {
+  color: var(--ink);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.req-table__link:hover {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.req-table__mono {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.req-table__service {
+  color: var(--ink);
+}
+
+.req-table__date {
+  white-space: nowrap;
+  color: var(--ink-3);
+  font-size: 0.88rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .req-row {
+    animation: reqRowIn 0.4s var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 35ms);
+  }
+}
+
+@keyframes reqRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Server pagination row: "Showing X–Y of Z" + prev/next. */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pagination__count {
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pagination__page {
+  font-size: 0.85rem;
+  color: var(--ink-3);
+}
+
+@media (max-width: 900px) {
+  /* Search + disclosure button share row one; the selects hide behind it. */
+  .filters {
+    grid-template-columns: 1fr auto;
+  }
+  .filters__search {
+    grid-column: 1;
+    min-width: 0;
+  }
+  .filters__toggle {
+    display: inline-flex;
+    min-height: 44px;
+  }
+  .filters__input {
+    min-height: 44px;
+    padding-right: 3rem;
+  }
+  .filters__clear {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .filters__panel {
+    display: none;
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .filters--open .filters__panel {
+    display: grid;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Table → stacked cards; every cell keeps its label via data-label. */
+  .req-table thead {
+    display: none;
+  }
+
+  .req-table,
+  .req-table tbody,
+  .req-table tr,
+  .req-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .req-row {
+    position: relative;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .req-row:last-child {
+    border-bottom: none;
+  }
+
+  .req-table tbody td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: none;
+  }
+
+  /*
+   * Stacked-card labels. `display: block` must be explicit: `thead` is gone,
+   * so without it the generated label inherits `display: none` and the row
+   * reads as an unlabeled word salad. Sentence case, not shouted uppercase.
+   */
+  .req-table tbody td::before {
+    content: attr(data-label);
+    display: block;
+    flex-shrink: 0;
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Customer name stays the anchor: label above, name below. */
+  .req-table tbody td:first-child {
+    display: block;
+    padding-bottom: 0.55rem;
+    margin-bottom: 0.35rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  /*
+   * The whole card is one tap target: the link gets a real 44px hit area and
+   * a stretched pseudo-element covers the rest of the row.
+   */
+  .req-table__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .req-table__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters__panel {
+    grid-template-columns: 1fr;
+  }
+  .pagination {
+    justify-content: center;
+  }
+}
